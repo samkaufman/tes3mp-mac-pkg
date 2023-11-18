@@ -1,0 +1,25 @@
+(version 1)
+(debug deny)
+
+(define (home-subpath r)
+  (subpath (string-append (param "HOME") r)))
+
+(allow default)
+(deny file-write*)
+
+(deny file-read* (subpath "/usr/local/"))
+(allow file-read* (regex #"^/usr/local/.*(python|cmake|meson|nasm|sccache|pkg-config)"))
+(allow file-read* (regex #"^/usr/local/share/cmake-.*"))
+(allow file-read* (regex #"^/usr/local/share/cmake/.*"))
+
+(allow file-write-create
+    (subpath (param "INSTALLROOTROOT")))
+(allow file-write*
+    (subpath (param "BUILD"))
+    (subpath (param "INSTALLROOT"))
+    (subpath (param "TMPDIR"))
+    (subpath "/dev")
+    (subpath "/private/var/folders")
+    (subpath "/private/var/tmp")
+    (subpath "/private/tmp")
+)
