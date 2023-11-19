@@ -52,3 +52,6 @@ cp Info.plist testbox/OpenMW.app/Contents/
 
 # Update the version file TES3MP use, at runtime, for compatibility checks.
 echo -e $TES3MP_VERSION_FILE > "testbox/OpenMW.app/Contents/Resources/resources/version"
+
+# Rename OpenMW.app to TES3MP.app.
+mv testbox/OpenMW.app testbox/TES3MP.app
