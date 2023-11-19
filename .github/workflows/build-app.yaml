@@ -6,6 +6,7 @@ jobs:
     runs-on: macos-12
     env:
       SCCACHE_GHA_ENABLED: "true"
+      SCCACHE_CACHE_MULTIARCH: 1
     steps:
       - uses: actions/checkout@v2
       - name: Run sccache-cache
