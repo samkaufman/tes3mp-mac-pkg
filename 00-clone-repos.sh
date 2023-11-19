@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -e
+set -ex
 . ./_common.sh
 
 readonly LZ4_TAG="v1.9.4"
