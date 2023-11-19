@@ -11,17 +11,6 @@ BUILD_SB=${BUILD_SB:P}
 
 readonly SED=gsed  # TODO: Document need for gsed.
 
-# Choose Homebrew LLVM
-# export CC="/usr/local/opt/llvm/bin/clang"
-# export CXX="/usr/local/opt/llvm/bin/clang++"
-# export LLD="/usr/local/opt/llvm/bin/ld64.lld"
-# export CC_LD="/usr/local/opt/llvm/bin/ld64.lld"
-# export PATH="/usr/local/opt/llvm/bin:$PATH"
-# export LDFLAGS="-L/usr/local/opt/llvm/lib"
-# export CFLAGS="-I/usr/local/opt/llvm/include"
-# export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
-# export ICONV_DIR="$LIB/iconv"
 export GETTEXT_DIR="$LIB/gettext"
 export PCRE2_DIR="$LIB/pcre2"
 export GLIB_DIR="$LIB/glib"
@@ -33,7 +22,7 @@ export PNG_ROOT="$LIB/libpng"  # TODO: grep and replace
 export JPEG_ROOT="$LIB/libjpeg"  # TODO: grep and replace
 export BOOST_ROOT="$LIB/boost"  # TODO: grep and replace
 export QT5_PREFIX="$LIB/qt5"
-export UNSHIELD_PREFIX="$LIB/unshield"
+export UNSHIELD_ROOT="$LIB/unshield"
 export RAKNET_ROOT="$LIB/raknet"
 export COLLADA_ROOT="$LIB/collada-dom"
 export LUAJIT_DIR="$LIB/luajit"
@@ -41,19 +30,16 @@ export OPENAL_DIR="$LIB/openal"
 export BULLET_DIR="$LIB/bullet"
 export FFMPEG_DIR="$LIB/ffmpeg"
 export LZ4_DIR="$LIB/lz4"
-# export ZLIB_LIBRARY_PATH="$LIB/zlib/lib"  # TODO: grep and replace
-# export ZLIB_INCLUDE="$LIB/zlib/include"  # TODO: grep and replace
-
 export MYGUI_HOME="$LIB/MyGUIEngine.framework"  # TODO: grep and replace
 
 export MACOSX_DEPLOYMENT_TARGET=12.0
 
-# Use stock clang everywhere.
-# TODO: Remove sccache.
+# Use stock clang with sccache everywhere.
 export SCCACHE_CACHE_MULTIARCH=1
 export CC_NO_SCCACHE="/usr/bin/clang" CXX_NO_SCCACHE="/usr/bin/clang++"
 export CC="$(which sccache) $CC_NO_SCCACHE" CXX="$(which sccache) $CXX_NO_SCCACHE"
-# export CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE"
+export CMAKE_CC_COMPILER_LAUNCHER="$(which sccache)"
+export CMAKE_CXX_COMPILER_LAUNCHER="$(which sccache)"
 
 # Reset LDFLAGS, LD_LIBRARY_PATH, and PKG_CONFIG_PATH so we don't accidentally use
 # non-stock libraries (e.g., from Homebrew).

@@ -11,6 +11,8 @@ pushd build
 cmake -Wno-dev \
       -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations" \
       -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
+      -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
       -DCMAKE_INSTALL_PREFIX="$OSG_DIR" \
       -DBUILD_OSG_APPLICATIONS=OFF \
       -DBUILD_OSG_PLUGINS_BY_DEFAULT=0 -DBUILD_OSG_PLUGIN_OSG=1 \

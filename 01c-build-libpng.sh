@@ -4,19 +4,21 @@ set -e
 
 pushd "$SRC/libpng"
 
-readonly COMMON_CMAKE_ARGS="-GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO"
+readonly COMMON_CMAKE_ARGS=(
+    -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE"
+    -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO)
 
 # Build ARM version.
 mkdir -p build-arm
 pushd build-arm
-cmake $COMMON_CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES:STRING=arm64 ..
+cmake $COMMON_CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES=arm64 ..
 cmake --build .
 popd
 
 # Build x86_64 version.
 mkdir -p build-x86
 pushd build-x86
-cmake $COMMON_CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64 \
+cmake $COMMON_CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES=x86_64 \
       -DCMAKE_INSTALL_PREFIX="$PNG_ROOT" \
       -DARMV8_BUILD=../build-arm ..
 cmake --build .

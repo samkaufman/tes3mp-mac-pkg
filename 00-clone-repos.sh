@@ -12,6 +12,7 @@ readonly OSG_TAG="e65f47c4ab3a0b53cc19f517961671e5f840a08d"
 # A general Git repo. cloning function
 function clone {
     rm -rf "$2"
+    echo "Cloning $1"
     git clone --quiet "$1" "$2"
     if [ -n "$3" ]; then
         pushd "$2"
@@ -24,12 +25,18 @@ function clone {
 function download_tar {
     filename=$(basename "$1")
 
-    rm -f "$OUT/$filename"
-    mkdir -p "$2"
-    curl $1 -L -o "$OUT/$filename"
+    rm -rf "$2"
+    if [ ! -f "$OUT/$filename" ]; then
+        echo "Downloading $1"
+        curl $1 -L -o "$OUT/$filename"
+    fi
     echo "$3" "$OUT/$filename" | sha256sum --check --status || exit 1
+    mkdir -p "$2"
+    echo "Extracting $2"
     tar --strip-components 1 -C "$2" -xf "$OUT/$filename"
 }
+
+mkdir -p "$SRC"
 
 download_tar "https://ftp.gnu.org/gnu/libiconv/libiconv-1.17.tar.gz" \
     "$SRC/iconv" \
@@ -108,5 +115,5 @@ pushd "$SRC/TES3MP"
 "$SED" -i 's|!defined(__clang__) && ||g' "./apps/openmw-mp/Script/Types.hpp"
 "$SED" -i "/Settings::Manager mgr;/i #ifdef __APPLE__\nboost::filesystem::path binary_path = boost::filesystem::system_complete(boost::filesystem::path(argv[0]));\nboost::filesystem::current_path(binary_path.parent_path());\n#endif" ./apps/{browser,openmw-mp}/main.cpp
 # Fix the odd path separator used for macOS paths.
-"$SED" -i "/#define _SEP_ ':'/c\#define _SEP_ '/'" out/src/TES3MP/components/openmw-mp/Utils.cpp
+"$SED" -i "/#define _SEP_ ':'/c\#define _SEP_ '/'" components/openmw-mp/Utils.cpp
 popd

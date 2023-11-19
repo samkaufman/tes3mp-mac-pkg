@@ -4,7 +4,9 @@ set -ex
 
 pushd "$SRC/libjpeg-turbo"
 
-readonly COMMON_CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO -GNinja"
+readonly COMMON_CMAKE_ARGS=(
+    -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE"
+    -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO -GNinja)
 
 # Build ARM version.
 mkdir -p build-arm

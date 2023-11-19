@@ -4,7 +4,9 @@ set -ex
 
 pushd "$SRC/SDL2"
 
-readonly COMMON_CMAKE_ARGS="-GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO"
+readonly COMMON_CMAKE_ARGS=(
+    -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE"
+    -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC=NO)
 
 # Build ARM version.
 mkdir -p build-arm

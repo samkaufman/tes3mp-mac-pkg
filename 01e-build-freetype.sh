@@ -6,6 +6,8 @@ pushd "$SRC/freetype"
 mkdir -p build
 pushd build
 cmake -GNinja \
+      -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
+      -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
       -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=TRUE \
       -DCMAKE_INSTALL_PREFIX="$FREETYPE_DIR" \
       -DFT_DISABLE_HARFBUZZ=TRUE \
