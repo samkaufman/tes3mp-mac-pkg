@@ -74,7 +74,7 @@ download_tar https://downloads.sourceforge.net/project/libpng/libpng16/1.6.40/li
 download_tar https://github.com/libsdl-org/SDL/releases/download/release-2.28.3/SDL2-2.28.3.tar.gz \
     "$SRC/SDL2" \
     "7acb8679652701a2504d734e2ba7543ec1a83e310498ddd22fd44bf965eb5518"
-download_tar "http://fresh-center.net/linux/misc/zlib-1.2.13.tar.gz" \
+download_tar "https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz" \
     "$SRC/zlib" \
     "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30"
 download_tar "https://github.com/OpenMW/osg/archive/e65f47c4ab3a0b53cc19f517961671e5f840a08d.zip" \
