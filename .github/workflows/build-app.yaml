@@ -1,0 +1,24 @@
+name: build-app
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-12
+    env:
+      SCCACHE_GHA_ENABLED: "true"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.3
+        with:
+          version: "v0.5.2"
+      - run: brew install coreutils gnu-sed
+      - name: Build
+        run: ./build.sh
+      - name: Compress app bundle
+        run: xz -z -9 testbox/TES3MP.app
+      - name: Save compressed app bundle as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: TES3MP.app.xz
+          path: testbox/TES3MP.app.xz
