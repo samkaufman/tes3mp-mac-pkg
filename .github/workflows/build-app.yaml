@@ -8,6 +8,8 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       SCCACHE_CACHE_MULTIARCH: 1
     steps:
+      - name: Select Xcode 15
+        run: sudo xcode-select -s '/Applications/Xcode_15.0.1.app/Contents/Developer'
       - uses: actions/checkout@v2
       - name: Run sccache-cache
         uses: mozilla-actions/sccache-action@v0.0.3
