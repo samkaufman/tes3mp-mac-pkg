@@ -47,6 +47,9 @@ pushd "$SRC/iconv"
 patch -p1 < "$SRC/iconv-patch-utf8mac.diff"
 popd
 
+download_tar "https://downloads.sourceforge.net/project/lzmautils/xz-5.4.3.tar.gz" \
+    "$SRC/xz" \
+    "1c382e0bc2e4e0af58398a903dd62fff7e510171d2de47a1ebe06d1528e9b7e9"
 download_tar "https://ftp.gnu.org/gnu/gettext/gettext-0.21.1.tar.gz" \
     "$SRC/gettext" \
     "e8c3650e1d8cee875c4f355642382c1df83058bd5a11ee8555c0cf276d646d45"

@@ -23,7 +23,6 @@ CXXFLAGS="-arch x86_64 -arch arm64" \
         --disable-csharp \
         --without-git \
         --without-cvs \
-        --without-xz \
         --with-included-gettext
 run_in_sandbox make clean
 run_in_sandbox make -j$(sysctl -n hw.logicalcpu)

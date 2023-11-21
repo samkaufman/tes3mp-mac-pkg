@@ -30,6 +30,7 @@ export OPENAL_DIR="$LIB/openal"
 export BULLET_DIR="$LIB/bullet"
 export FFMPEG_DIR="$LIB/ffmpeg"
 export LZ4_DIR="$LIB/lz4"
+export XZ_DIR="$LIB/xz"
 export MYGUI_HOME="$LIB/MyGUIEngine.framework"  # TODO: grep and replace
 
 export MACOSX_DEPLOYMENT_TARGET=12.0
@@ -55,9 +56,10 @@ $LUAJIT_DIR/lib/pkgconfig:\
 $OPENAL_DIR/lib/pkgconfig:\
 $BULLET_DIR/lib/pkgconfig:\
 $FFMPEG_DIR/lib/pkgconfig:\
+$XZ_DIR/lib/pkgconfig:\
 $LZ4_DIR/lib/pkgconfig"
 
-export CPATH="$PCRE2_DIR/include:$FREETYPE_DIR/include:$SDL2DIR/include"
+export CPATH="$XZ_DIR/include:$PCRE2_DIR/include:$FREETYPE_DIR/include:$SDL2DIR/include"
 export CMAKE_PREFIX_PATH="$BULLET_DIR:$FREETYPE_DIR:$SDL2DIR:$QT5_PREFIX"
 
 # Prevent pkg-config from looking its default directories.
