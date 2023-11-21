@@ -18,7 +18,7 @@ cmake -Wno-dev -DOPENMW_LTO_BUILD=ON \
       -DCMAKE_INSTALL_PREFIX="$OUT/tes3mp" \
       -DBUILD_OPENCS=OFF \
       -DCMAKE_CXX_STANDARD=14 \
-      -DCMAKE_CXX_FLAGS="-std=c++14 -fsanitize=undefined" \
+      -DCMAKE_CXX_FLAGS="-std=c++14" \
       -DDESIRED_QT_VERSION=5 \
       -DOPENMW_USE_SYSTEM_OSG=ON \
       -DOSGPlugins_DONT_FIND_DEPENDENCIES=ON \
