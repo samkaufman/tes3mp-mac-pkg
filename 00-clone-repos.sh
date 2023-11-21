@@ -120,3 +120,9 @@ pushd "$SRC/TES3MP"
 # Fix the odd path separator used for macOS paths.
 "$SED" -i "/#define _SEP_ ':'/c\#define _SEP_ '/'" components/openmw-mp/Utils.cpp
 popd
+
+# A fix for Qt with Xcode 15. (Will be fixed in Xcode 15.1).
+pushd "$SRC/qt5"
+curl -o qt5-qmake-xcode15.patch https://raw.githubusercontent.com/Homebrew/formula-patches/086e8cf/qt5/qt5-qmake-xcode15.patch
+patch -p1 < qt5-qmake-xcode15.patch
+popd
