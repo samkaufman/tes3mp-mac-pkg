@@ -125,4 +125,6 @@ popd
 pushd "$SRC/qt5"
 curl -o qt5-qmake-xcode15.patch https://raw.githubusercontent.com/Homebrew/formula-patches/086e8cf/qt5/qt5-qmake-xcode15.patch
 patch -p1 < qt5-qmake-xcode15.patch
+curl -o fffd3d.diff https://github.com/crystalidea/qt-build-tools/commit/fffd3d4b0a628dd780ff8cd553e8f8dc9c66c2ab.diff
+patch -p2 < fffd3d.diff 
 popd
