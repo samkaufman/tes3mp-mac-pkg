@@ -12,9 +12,9 @@ jobs:
       - name: Build
         run: ./build.sh
       - name: Compress app bundle
-        run: xz -z -9 testbox/TES3MP.app
+        run: XZ_OPT=-9 tar cJf TES3MP.app.tar.xz testbox/TES3MP.app
       - name: Save compressed app bundle as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TES3MP.app.xz
-          path: testbox/TES3MP.app.xz
+          name: TES3MP.app.tar.xz
+          path: testbox/TES3MP.app.tar.xz
