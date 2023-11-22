@@ -50,7 +50,7 @@ $FREETYPE_DIR/lib/pkgconfig:\
 $SDL2DIR/lib/pkgconfig:\
 $OSG_DIR/lib/pkgconfig:\
 $QT5_PREFIX/lib/pkgconfig:\
-$UNSHIELD_PREFIX/lib/pkgconfig:\
+$UNSHIELD_ROOT/lib/pkgconfig:\
 $COLLADA_ROOT/lib/pkgconfig:\
 $LUAJIT_DIR/lib/pkgconfig:\
 $OPENAL_DIR/lib/pkgconfig:\
