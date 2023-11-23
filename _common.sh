@@ -36,11 +36,8 @@ export MYGUI_HOME="$LIB/MyGUIEngine.framework"  # TODO: grep and replace
 export MACOSX_DEPLOYMENT_TARGET=12.0
 
 # Use stock clang with sccache everywhere.
-export SCCACHE_CACHE_MULTIARCH=1
 export CC_NO_SCCACHE="/usr/bin/clang" CXX_NO_SCCACHE="/usr/bin/clang++"
-export CC="$(which sccache) $CC_NO_SCCACHE" CXX="$(which sccache) $CXX_NO_SCCACHE"
-export CMAKE_CC_COMPILER_LAUNCHER="$(which sccache)"
-export CMAKE_CXX_COMPILER_LAUNCHER="$(which sccache)"
+export CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE"
 
 # Reset LDFLAGS, LD_LIBRARY_PATH, and PKG_CONFIG_PATH so we don't accidentally use
 # non-stock libraries (e.g., from Homebrew).

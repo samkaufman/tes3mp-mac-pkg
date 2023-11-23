@@ -10,7 +10,6 @@ run_in_sandbox() {
 
 pushd "$SRC/gettext"
 
-CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE" \
 CFLAGS="-arch x86_64 -arch arm64" \
 CXXFLAGS="-arch x86_64 -arch arm64" \
     run_in_sandbox ./configure --disable-debug --disable-dependency-tracking \
