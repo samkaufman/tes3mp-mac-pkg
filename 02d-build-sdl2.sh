@@ -5,6 +5,7 @@ set -ex
 pushd "$SRC/SDL2"
 
 # Disable sccache. Had some trouble on GH Actions with sccache and SDL2.
+export CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE"
 readonly COMMON_CMAKE_ARGS=(
     -DVERBOSE=ON
     -DCMAKE_CC_COMPILER_LAUNCHER=""
