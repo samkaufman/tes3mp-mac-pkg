@@ -11,16 +11,18 @@ arg_parser.add_argument("RELATIVE", type=pathlib.Path)
 
 EXTS = ["", ".dylib", ".so"]
 
+
 def find_binaries(fixup_root: pathlib.Path) -> dict[str, pathlib.Path]:
     assert fixup_root.is_dir()
     result = {}
-    for file in fixup_root.glob('**/*'):
+    for file in fixup_root.glob("**/*"):
         if not is_executable(file):
             continue
         symlink_dest = file.resolve()
         file_key = path_key(file)
-        assert file_key not in result or result[file_key] == symlink_dest, \
-            f"Saw {file_key} twice: {result[file_key]} and {file}"
+        assert (
+            file_key not in result or result[file_key] == symlink_dest
+        ), f"Saw {file_key} twice: {result[file_key]} and {file}"
         result[file_key] = symlink_dest
     return result
 
@@ -41,24 +43,32 @@ def is_executable(path: pathlib.Path) -> bool:
     if not path.is_file() or path.suffix not in EXTS:
         return False
     try:
-        output = subprocess.check_output(['file', '--brief', str(path.absolute())], text=True)
+        output = subprocess.check_output(
+            ["file", "--brief", str(path.absolute())], text=True
+        )
     except Exception:
-        print("Error while checking type of file: " + str(path.absolute()), file=sys.stderr)
+        print(
+            "Error while checking type of file: " + str(path.absolute()),
+            file=sys.stderr,
+        )
         raise
-    first_line = output.split('\n')[0]
-    return 'Mach-O' in first_line and 'binary' in first_line
+    first_line = output.split("\n")[0]
+    return "Mach-O" in first_line and "binary" in first_line
 
 
 def lib_references(executable_path: pathlib.Path):
-    result = subprocess.check_output(["otool", "-L", str(executable_path)], text=True)
-    # Skip the first line which is the executable itself
-    libraries = result.splitlines()[1:]
+    result = subprocess.check_output(
+        ["otool", "-arch", "all", "-L", str(executable_path)], text=True
+    )
+    # Filter out lines which do not begin with some whitespace. These are
+    # headers listing the install name of the target and the architecture.
+    libraries = [line for line in result.splitlines() if line[0].isspace()]
     libraries = [line.strip().split()[0] for line in libraries]
     libraries = [pathlib.Path(lib) for lib in libraries]
     return libraries
 
 
-if __name__ == "__main__":
+def main():
     args = arg_parser.parse_args()
     bins_map = find_binaries(args.ROOT)
     relative_to_path = args.RELATIVE.resolve()
@@ -71,6 +81,10 @@ if __name__ == "__main__":
             if path_key(r) in bins_map:
                 print(f"{bins_map[path_key(r)]} relative_to {relative_to_path}")
                 new_path = f"@executable_path/{bins_map[path_key(r)].relative_to(relative_to_path, walk_up=True)}"
-                print(f"    {new_path}")
+                print(f"    {new_path} ***")
                 install_name_tool_args += ["-change", str(r), new_path]
         subprocess.check_call(install_name_tool_args + [str(canon_path)])
+
+
+if __name__ == "__main__":
+    main()
