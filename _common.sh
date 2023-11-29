@@ -11,6 +11,9 @@ BUILD_SB=${BUILD_SB:P}
 
 readonly SED=gsed  # TODO: Document need for gsed.
 
+readonly TES3MP_MAC_USE_SCCACHE=${TES3MP_MAC_USE_SCCACHE:-0}
+export SCCACHE_CACHE_MULTIARCH=1
+
 export GETTEXT_DIR="$LIB/gettext"
 export PCRE2_DIR="$LIB/pcre2"
 export GLIB_DIR="$LIB/glib"
@@ -37,7 +40,14 @@ export MACOSX_DEPLOYMENT_TARGET=12.0
 
 # Use stock clang with sccache everywhere.
 export CC_NO_SCCACHE="/usr/bin/clang" CXX_NO_SCCACHE="/usr/bin/clang++"
-export CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE"
+if [ "$TES3MP_MAC_USE_SCCACHE" -eq 1 ]; then
+    export CC="$(which sccache) $CC_NO_SCCACHE"
+    export CXX="$(which sccache) $CXX_NO_SCCACHE"
+    export CMAKE_C_COMPILER_LAUNCHER="$(which sccache)"
+    export CMAKE_CXX_COMPILER_LAUNCHER="$(which sccache)"
+else
+    export CC="$CC_NO_SCCACHE" CXX="$CXX_NO_SCCACHE"
+fi
 
 # Reset LDFLAGS, LD_LIBRARY_PATH, and PKG_CONFIG_PATH so we don't accidentally use
 # non-stock libraries (e.g., from Homebrew).

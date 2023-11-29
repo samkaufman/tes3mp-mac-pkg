@@ -4,10 +4,6 @@ set -e
 
 pushd "$SRC/TES3MP"
 
-# export CMAKE_PREFIX_PATH="$OUT/lib;$CMAKE_PREFIX_PATH"
-# export CMAKE_PREFIX_PATH="/usr/local/Cellar/bullet/3.25/lib/bullet/double;$CMAKE_PREFIX_PATH"
-# export CMAKE_PREFIX_PATH="$SRC/SDL2/build;$CMAKE_PREFIX_PATH"
-
 mkdir -p build
 pushd build
 cmake -Wno-dev -DOPENMW_LTO_BUILD=ON \
@@ -16,7 +12,14 @@ cmake -Wno-dev -DOPENMW_LTO_BUILD=ON \
       -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
       -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
       -DCMAKE_INSTALL_PREFIX="$OUT/tes3mp" \
+      -DBUILD_WIZARD=OFF \
+      -DBUILD_MWINIIMPORTER=OFF \
       -DBUILD_OPENCS=OFF \
+      -DBUILD_ESSIMPORTER=OFF \
+      -DBUILD_BSATOOL=OFF \
+      -DBUILD_WIZARD=OFF \
+      -DBUILD_ESMTOOL=OFF \
+      -DBUILD_NIFTEST=OFF \
       -DCMAKE_CXX_STANDARD=14 \
       -DCMAKE_CXX_FLAGS="-std=c++14" \
       -DDESIRED_QT_VERSION=5 \

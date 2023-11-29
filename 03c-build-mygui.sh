@@ -6,12 +6,14 @@ pushd "$SRC/mygui"
 
 mkdir -p build
 pushd build
+# The following disables sccache even if TES3MP_MAC_USE_SCCACHE is set. I had
+# some difficult-to-debug trouble with it, and MyGUI builds relatively quickly.
 cmake -Wno-dev \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64\;arm64 \
       -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
       -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
-      -DCMAKE_CC_COMPILER_LAUNCHER="" \
+      -DCMAKE_C_COMPILER_LAUNCHER="" \
       -DCMAKE_CXX_COMPILER_LAUNCHER="" \
       -DMYGUI_RENDERSYSTEM=4 \
       -DMYGUI_DISABLE_PLUGINS=TRUE \

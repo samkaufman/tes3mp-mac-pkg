@@ -16,11 +16,11 @@ pushd "$SRC/unshield"
 mkdir -p build
 pushd build
 cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
+      -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
       -DENABLE_STATIC=NO \
       -DCMAKE_INSTALL_PREFIX="$UNSHIELD_ROOT" \
       -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64\;arm64 \
-      -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
-      -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
       -DUSE_OUR_OWN_MD5=ON \
       -GNinja ..
 cmake --build .

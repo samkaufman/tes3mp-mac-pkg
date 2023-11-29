@@ -9,12 +9,12 @@ build_raknet_arch() {
       # -fno-strict-float-cast-overflow needed to emulate the default behavior
       # of older Clang and GCC.
       cmake -DCMAKE_BUILD_TYPE=Release -DCRABNET_ENABLE_DLL=OFF \
+            -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
+            -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
             -DCRABNET_ENABLE_SAMPLES=OFF -DCRABNET_ENABLE_STATIC=ON \
             -DCRABNET_GENERATE_INCLUDE_ONLY_DIR=ON \
             -DCMAKE_CXX_STANDARD=11 \
             -DCMAKE_OSX_ARCHITECTURES="$1" \
-            -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
-            -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
             -DCMAKE_CXX_FLAGS="-fno-strict-float-cast-overflow" \
             -GNinja ..
       # cmake --build .

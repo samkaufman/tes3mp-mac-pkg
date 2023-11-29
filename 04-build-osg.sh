@@ -2,9 +2,6 @@
 set -e
 . ./_common.sh
 
-export MYGUI_HOME="$SRC/mygui/build/lib/MyGUIEngine.framework"
-export CMAKE_PREFIX_PATH="/usr/local/Cellar/bullet/3.25/lib/bullet/double;$CMAKE_PREFIX_PATH"
-
 pushd "$SRC/osg"
 mkdir -p build
 pushd build

@@ -9,9 +9,9 @@ mkdir -p build
 pushd build
 cmake -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_OSX_ARCHITECTURES=arm64\;x86_64 \
+      -DCMAKE_INSTALL_PREFIX="$COLLADA_ROOT" \
       -DCMAKE_C_COMPILER="$CC_NO_SCCACHE" \
       -DCMAKE_CXX_COMPILER="$CXX_NO_SCCACHE" \
-      -DCMAKE_INSTALL_PREFIX="$COLLADA_ROOT" \
       -GNinja ..
 cmake --build .
 mkdir -p "$COLLADA_ROOT"

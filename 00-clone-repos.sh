@@ -77,9 +77,9 @@ download_tar https://downloads.sourceforge.net/project/libpng/libpng16/1.6.40/li
 download_tar https://github.com/libsdl-org/SDL/releases/download/release-2.28.3/SDL2-2.28.3.tar.gz \
     "$SRC/SDL2" \
     "7acb8679652701a2504d734e2ba7543ec1a83e310498ddd22fd44bf965eb5518"
-download_tar "https://github.com/madler/zlib/releases/download/v1.2.13/zlib-1.2.13.tar.gz" \
+download_tar "http://fresh-center.net/linux/misc/zlib-1.3.tar.gz" \
     "$SRC/zlib" \
-    "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30"
+    "ff0ba4c292013dbc27530b3a81e1f9a813cd39de01ca5e0f8bf355702efa593e"
 download_tar "https://github.com/OpenMW/osg/archive/e65f47c4ab3a0b53cc19f517961671e5f840a08d.zip" \
     "$SRC/osg" \
     "a46dd4e3999985c2377dc9fdc0c5b37f41279f6aa95ae304de3e023cbb8b2cd6"
@@ -113,12 +113,19 @@ clone "https://github.com/TES3MP/CrabNet" "$SRC/raknet" "$RAKNET_HASH"
 clone "https://github.com/TES3MP/CoreScripts.git" "$SRC/CoreScripts" "$CORESCRIPTS_TAG"
 clone "https://github.com/TES3MP/TES3MP.git" "$SRC/TES3MP" "$TES3MP_VERSION"
 
-# # A hacky fix to TES3MP compilation with Clang on macOS.
+# A hacky fix to TES3MP compilation with Clang on macOS.
 pushd "$SRC/TES3MP"
 "$SED" -i 's|!defined(__clang__) && ||g' "./apps/openmw-mp/Script/Types.hpp"
 "$SED" -i "/Settings::Manager mgr;/i #ifdef __APPLE__\nboost::filesystem::path binary_path = boost::filesystem::system_complete(boost::filesystem::path(argv[0]));\nboost::filesystem::current_path(binary_path.parent_path());\n#endif" ./apps/{browser,openmw-mp}/main.cpp
 # Fix the odd path separator used for macOS paths.
 "$SED" -i "/#define _SEP_ ':'/c\#define _SEP_ '/'" components/openmw-mp/Utils.cpp
+popd
+
+# Fix for an MWSound infinite loop.
+pushd "$SRC/TES3MP"
+curl -o mwsound-fix.patch https://github.com/OpenMW/openmw/commit/c5cdb0c27797281dfde72761baf2cc6554a86189.patch
+splitdiff -a mwsound-fix.patch 
+grep -L CHANGELOG mwsound-fix.patch.*.patch | xargs patch -i
 popd
 
 # A fix for Qt with Xcode 15. (Will be fixed in Xcode 15.1).
