@@ -23,7 +23,6 @@ pushd build-qt5
     -skip qtwebsockets -skip qtwebview -skip qtwinextras -skip qtx11extras -skip qtxmlpatterns \
     -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc -no-sql-psql -no-sql-sqlite \
     -no-sql-tds -no-cups -no-gtk -no-zstd \
-    -no-opengl \
     -I "$PNG_ROOT/include" -I "$FREETYPE_DIR/include" \
     -L "$PNG_ROOT/lib" -L "$FREETYPE_DIR/lib" \
     QMAKE_APPLE_DEVICE_ARCHS="x86_64 arm64" \
