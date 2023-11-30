@@ -23,7 +23,7 @@ mkdir testbox/OpenMW.app/Contents/Resources/server
 cp -R "$SRC/CoreScripts" testbox/OpenMW.app/Contents/Resources/server/CoreScripts
 cp $SRC/TES3MP/build/*default.cfg testbox/OpenMW.app/Contents/Resources
 
-# TODO: Make an icns out of the TES3MP logo which will be referenced by Info.plist.
+# Make an icns out of the TES3MP logo which will be referenced by Info.plist.
 bake_icns() {
     # Credit to https://github.com/BenSouchet/png-to-icns/tree/main (MIT license).
     sips -z 16 16     "$1" --out "$2/icon_16x16.png" > /dev/null
@@ -50,8 +50,12 @@ cp Info.plist testbox/OpenMW.app/Contents/
 "$SED" -i '/home = .\/server/c\home = ..\/Resources\/server\/CoreScripts' \
     testbox/OpenMW.app/Contents/Resources/tes3mp-server-default.cfg
 
-# Update the version file TES3MP use, at runtime, for compatibility checks.
+# Update the version file TES3MP uses at runtime for compatibility checks.
 echo -e $TES3MP_VERSION_FILE > "testbox/OpenMW.app/Contents/Resources/resources/version"
+
+# Copy credits files into the app bundle.
+cp out/src/TES3MP/AUTHORS.md testbox/OpenMW.app/Contents/Resources/
+cp out/src/TES3MP/tes3mp-credits.md testbox/OpenMW.app/Contents/Resources/
 
 # Rename OpenMW.app to TES3MP.app.
 mv testbox/OpenMW.app testbox/TES3MP.app
