@@ -65,8 +65,8 @@ mv testbox/OpenMW.app testbox/TES3MP.app
 
 # Create a .dmg.
 create-dmg --volname "TES3MP-$TES3MP_VERSION" \
-    --volicon testbox/TES3MP.app/Contents/Resources/TES3MP.icns \
     --window-size 800 400 \
     --icon "TES3MP.app" 200 190 \
     --app-drop-link 600 185 \
+    --hdiutil-verbose \
     TES3MP-$TES3MP_VERSION.dmg ./testbox
