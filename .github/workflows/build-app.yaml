@@ -8,13 +8,11 @@ jobs:
       - name: Select Xcode 15
         run: sudo xcode-select -s '/Applications/Xcode_15.0.1.app/Contents/Developer'
       - uses: actions/checkout@v2
-      - run: brew install coreutils gnu-sed nasm ninja meson patchutils
+      - run: brew install coreutils gnu-sed nasm ninja meson patchutils create-dmg
       - name: Build
         run: ./build.sh
-      - name: Compress app bundle
-        run: XZ_OPT=-9 tar cJf testbox/TES3MP.app.tar.xz testbox/TES3MP.app
-      - name: Save compressed app bundle as an artifact
+      - name: Save .dmg as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TES3MP.app.tar.xz
-          path: testbox/TES3MP.app.tar.xz
+          name: release
+          path: "*.dmg"
