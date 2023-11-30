@@ -46,6 +46,9 @@ rm "testbox/OpenMW.app/Contents/Resources/OpenMW.icns"
 
 cp Info.plist testbox/OpenMW.app/Contents/
 
+# TODO: Update the version number in Info.plist.
+"$SED" -i "s/VERSIONHERE/$TES3MP_VERSION/g" testbox/OpenMW.app/Contents/Info.plist
+
 # Update tes3mp-server-default.cfg to look in the app bundle for server scripts.
 "$SED" -i '/home = .\/server/c\home = ..\/Resources\/server\/CoreScripts' \
     testbox/OpenMW.app/Contents/Resources/tes3mp-server-default.cfg
