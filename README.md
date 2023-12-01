@@ -1,6 +1,6 @@
 # TES3MP macOS Packages
 
-This repository contains script which package TES3MP, an open-source multiplayer client
+This repository contains scripts which package TES3MP, an open-source multiplayer client
 for the game Morrowind, for MacOS. It provides universal binaries compatible with both
 Intel- and Apple Silicon-based Macs.
 
