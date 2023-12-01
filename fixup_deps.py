@@ -4,6 +4,7 @@ import argparse
 import pathlib
 import subprocess
 import sys
+from typing import Mapping
 
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument("ROOT", type=pathlib.Path)
@@ -68,19 +69,25 @@ def lib_references(executable_path: pathlib.Path):
     return libraries
 
 
+def make_new_path(relative_path, bins_map: Mapping[str, pathlib.Path], r: pathlib.Path) -> str:
+    return f"@executable_path/{bins_map[path_key(r)].relative_to(relative_path, walk_up=True)}"
+
+
 def main():
     args = arg_parser.parse_args()
     bins_map = find_binaries(args.ROOT)
     relative_to_path = args.RELATIVE.resolve()
     for filename, canon_path in bins_map.items():
         install_name_tool_args = ["install_name_tool"]
-        # TODO: Also specify -id.
         print(f"{filename} -> {canon_path}")
+        new_id_path = make_new_path(relative_to_path, bins_map, canon_path)
+        print("New ID path:", new_id_path)
+        install_name_tool_args += ["-id", new_id_path]
         for r in lib_references(canon_path):
             print(f"  {r}")
             if path_key(r) in bins_map:
                 print(f"{bins_map[path_key(r)]} relative_to {relative_to_path}")
-                new_path = f"@executable_path/{bins_map[path_key(r)].relative_to(relative_to_path, walk_up=True)}"
+                new_path = make_new_path(relative_to_path, bins_map, r)
                 print(f"    {new_path} ***")
                 install_name_tool_args += ["-change", str(r), new_path]
         subprocess.check_call(install_name_tool_args + [str(canon_path)])

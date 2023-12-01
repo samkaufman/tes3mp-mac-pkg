@@ -15,7 +15,7 @@ find out/lib -name "*.so" \( -type f -o -type l \) -exec cp -P {} testbox/OpenMW
 find out/lib -name "*.framework" -type d -exec cp -R {} testbox/OpenMW.app/Contents/Frameworks/ \;
 mv testbox/OpenMW.app/Contents/Frameworks/osgdb_*.so testbox/OpenMW.app/Contents/PlugIns/osgPlugins-$OSG_VERSION
 rm testbox/OpenMW.app/Contents/Frameworks/**/libqcocoa.dylib
-./40-fixup-deps.py testbox/OpenMW.app testbox/OpenMW.app/Contents/MacOS
+./fixup_deps.py testbox/OpenMW.app testbox/OpenMW.app/Contents/MacOS
 
 # Following isn't fixing up deps, but it is important.
 # TODO: Move to other scripts.
@@ -62,11 +62,3 @@ cp out/src/TES3MP/tes3mp-credits.md testbox/OpenMW.app/Contents/Resources/
 
 # Rename OpenMW.app to TES3MP.app.
 mv testbox/OpenMW.app testbox/TES3MP.app
-
-# Create a .dmg.
-create-dmg --volname "TES3MP-$TES3MP_VERSION" \
-    --window-size 800 400 \
-    --icon "TES3MP.app" 200 190 \
-    --app-drop-link 600 185 \
-    --hdiutil-verbose \
-    TES3MP-$TES3MP_VERSION.dmg ./testbox
